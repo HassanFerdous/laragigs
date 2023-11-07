@@ -8,7 +8,7 @@
 				<p class="mb-4">Edit: {{$listing->title}}</p>
 			</header>
 
-			<form action="/listings/{{$listing->id}}" method="POST">
+			<form action="/listings/{{$listing->id}}" method="POST" enctype="multipart/form-data">
 				@csrf
 				@method('PUT')
 				<div class="mb-6">

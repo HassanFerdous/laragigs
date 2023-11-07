@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ListingController extends Controller
@@ -63,9 +64,11 @@ class ListingController extends Controller
 		]);
 
 		if ($request->hasFile('logo')) {
+			if (Storage::exists('public/' . $listing->logo)) {
+				Storage::delete('public/' . $listing->logo);
+			}
 			$formFields['logo'] = $request->file('logo')->store('logos', 'public');
 		}
-
 		$listing->update($formFields);
 		return back();
 	}
