@@ -40,6 +40,7 @@ class ListingController extends Controller
 		if ($request->hasFile('logo')) {
 			$formFields['logo'] = $request->file('logo')->store('logos', 'public');
 		}
+		$formFields['user_id'] = auth()->id();
 		Listing::create($formFields);
 		return redirect('/');
 	}
@@ -67,6 +68,11 @@ class ListingController extends Controller
 
 		$listing->update($formFields);
 		return back();
+	}
+
+	function manage()
+	{
+		return view('listings.manage', ['listings' => auth()->user()->listings]);
 	}
 
 	function delete(Listing $listing)
